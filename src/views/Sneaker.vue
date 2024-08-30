@@ -18,11 +18,11 @@
       <h2>Комментарии</h2>
       <ul class="comments-list">
         <li v-for="comment in comments" :key="comment.id">
-          <strong>{{ comment.username }}:</strong> {{ comment.content }}
+          <strong>{{ comment.author }}:</strong> {{ comment.content }}
         </li>
       </ul>
-      <form @submit.prevent="submitComment" class="comment-form">
-        <h5>{{ newComment.username }}</h5>
+      <form @submit.prevent="submitComment" v-if="isAuthenticated == true" class="comment-form">
+
         <textarea v-model="newComment.content" placeholder="Ваш комментарий" required></textarea>
         <button type="submit">Отправить</button>
       </form>
@@ -47,7 +47,9 @@ export default {
       newComment: {
         content: '',
         username: this.getUsername()
-      }
+      },
+      isAuthenticated : false
+
     };
   },
   methods: {
@@ -100,22 +102,35 @@ export default {
     async submitComment() {
       if (this.newComment.username && this.newComment.content) {
         const newComment = {
-          id: generateId(), // Использовать уникальный идентификатор
-          username: this.newComment.username,
-          content: this.newComment.content
+          content: this.newComment.content,
+          author : this.newComment.username,
+          sneakerId : parseInt(this.id),
+
         };
         try {
-          await axios.post("/add/comments", newComment);
+          await axios.post("/comment/add", newComment);
           this.comments.push(newComment); // Обновить список комментариев
           this.newComment.content = ''; // Очистить поле ввода
         } catch (error) {
           console.error("Ошибка при отправке комментария:", error);
         }
       }
-    }
+    },
+    async loadComments() {
+      let response = await axios.get("/comment/get", {
+        params: { id: this.id }
+      });
+      this.comments = response.data
+    },
+    tokenInStorage() {
+      const token = localStorage.getItem('token');
+      this.isAuthenticated = !!token;
+    },
   },
   mounted() {
     this.loadSneakers();
+    this.tokenInStorage()
+    this.loadComments();
   }
 };
 </script>
