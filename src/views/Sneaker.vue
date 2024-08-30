@@ -22,7 +22,6 @@
         </li>
       </ul>
       <form @submit.prevent="submitComment" v-if="isAuthenticated == true" class="comment-form">
-
         <textarea v-model="newComment.content" placeholder="Ваш комментарий" required></textarea>
         <button type="submit">Отправить</button>
       </form>
@@ -138,7 +137,7 @@ export default {
 <style scoped>
 .sneaker-card {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   border: 1px solid #000000;
   border-radius: 8px;
   padding: 20px;
@@ -147,24 +146,27 @@ export default {
 }
 
 .sneaker-image {
-  width: 800px;
-  height: 750px;
+  width: 100%;
+  height: auto;
+  max-width: 300px; /* ограничение максимальной ширины для мобильных */
+  margin: 0 auto;
   border-radius: 8px;
 }
 
 .sneaker-info {
   flex: 1;
-  margin-top: 0;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .price {
-  font-size: 24px;
+  font-size: 20px;
   color: #e67e22;
   margin: 10px 0;
 }
 
 .description {
-  font-size: 16px;
+  font-size: 14px;
   color: #333;
   margin-bottom: 20px;
 }
@@ -172,13 +174,14 @@ export default {
 .actions {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
+  flex-wrap: wrap; /* позволяет кнопкам переноситься на следующую строку */
 }
 
 .like-button,
 .dislike-button {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 8px 16px;
+  font-size: 14px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -195,7 +198,7 @@ export default {
 }
 
 .comments-section {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .comments-list {
@@ -208,6 +211,7 @@ export default {
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
+  font-size: 14px;
 }
 
 .comment-form {
@@ -220,14 +224,14 @@ export default {
 .comment-form input,
 .comment-form textarea {
   padding: 10px;
-  font-size: 16px;
+  font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
 .comment-form button {
   padding: 10px;
-  font-size: 16px;
+  font-size: 14px;
   border: none;
   border-radius: 5px;
   background-color: #3498db;
@@ -237,5 +241,26 @@ export default {
 
 .comment-form button:hover {
   background-color: #2980b9;
+}
+
+/* Медиазапросы для мобильных устройств */
+@media (min-width: 600px) {
+  .sneaker-card {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .sneaker-image {
+    max-width: 600px;
+    height: auto;
+  }
+
+  .sneaker-info {
+    text-align: left;
+  }
+
+  .actions {
+    justify-content: flex-start;
+  }
 }
 </style>
