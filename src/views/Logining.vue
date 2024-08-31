@@ -46,7 +46,7 @@ export default {
 <template>
 
   <div class="container">
-    <LogError v-if="showError == true"></LogError>
+    <LogError v-if="showError == true" class="error"></LogError>
     <AlreadyLogin v-if="alreadyLogin == true"></AlreadyLogin>
 
 
@@ -109,5 +109,8 @@ html {
   background-color: #adb5bd;
   justify-content: center;
   align-items: center;
+}
+.error{
+  margin-top: 20px;
 }
 </style>

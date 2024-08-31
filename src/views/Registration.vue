@@ -40,7 +40,7 @@ export default {
 
 <template>
   <div class="container">
-    <RegErrorComponent v-if="showError" :message="errorMessage"></RegErrorComponent>
+    <RegErrorComponent v-if="showError" :message="errorMessage" class="error"></RegErrorComponent>
 
     <!-- Форма -->
     <AlreadyRegistred v-if="alreadyRegistered == true"></AlreadyRegistred>
@@ -116,5 +116,8 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.error{
+  margin-top: 20px;
 }
 </style>
