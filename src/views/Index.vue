@@ -6,7 +6,7 @@
           <li class="col-md-6 mb-4" v-for="sneaker in sneakers" :key="sneaker.id">
             <div class="sneaker-block">
               <img :src="sneaker.photoUrl" class="sneaker-img" :alt="sneaker.model">
-              <div class="sneaker-info">
+              <div class="sneaker-info" @click="goToSneakerDetail(sneaker.id)">
                 <h1 class="card-title">{{sneaker.brand}}</h1>
                 <h3 class="card-model">{{sneaker.model}}</h3>
                 <h5 class="card-color">{{sneaker.color}}</h5>
@@ -40,6 +40,9 @@ export default {
         console.error("Ошибка при загрузке данных:", error);
       }
     },
+    goToSneakerDetail(id) {
+      this.$router.push({ name: 'SneakerDetails', params: { id }});
+    }
   },
   mounted() {
     this.loadIndex();
@@ -78,9 +81,7 @@ body {
   transition: transform 0.3s ease;
 }
 
-.sneaker-block:hover .sneaker-img {
-  transform: scale(1.05);
-}
+
 
 .sneaker-info {
   margin-top: 15px;
