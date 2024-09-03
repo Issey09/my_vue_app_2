@@ -6,6 +6,7 @@ import Registration from "@/views/Registration.vue";
 import Logining from "@/views/Logining.vue";
 import Catalog from "@/views/Catalog.vue";
 import Sneaker from "@/views/Sneaker.vue";
+import Menu from "@/views/admin/Menu.vue";
 
 
 const routes = [
@@ -33,6 +34,10 @@ const routes = [
         path: '/sneaker/:id',
         component: Sneaker,
         name: 'SneakerDetails',
+    },
+    {
+        path: '/admin',
+        component: Menu
     }
     // Добавьте другие маршруты здесь
 ];

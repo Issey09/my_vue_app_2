@@ -9,6 +9,9 @@
       </button>
       <div class="collapse navbar-collapse" :class="{ 'show': isMenuOpen }" id="navbarNav">
         <ul class="navbar-nav ms-auto">
+          <li class="nav-item" v-if="userIsAdmin == true">
+            <router-link to="/admin" class="nav-link" @click="closeMenu">Админка</router-link>
+          </li>
           <li class="nav-item">
             <router-link to="/sneakers/all" class="nav-link" @click="closeMenu">Каталог</router-link>
           </li>
@@ -21,6 +24,7 @@
           <li class="nav-item" v-if="isAuthenticated">
             <button @click="logout" class="btn btn-outline-primary">Выйти</button>
           </li>
+
         </ul>
       </div>
     </div>
@@ -35,13 +39,31 @@ export default {
   data() {
     return {
       isAuthenticated: false,
-      isMenuOpen: false
+      isMenuOpen: false,
+      userIsAdmin: false
     };
   },
   methods: {
     tokenInStorage() {
       const token = localStorage.getItem('token');
       this.isAuthenticated = !!token;
+    },
+    getRole() {
+      const token = localStorage.getItem('token');
+      if (!token) return null;
+
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      const decoded = JSON.parse(jsonPayload);
+
+      if (decoded.role == "ADMIN") {
+        this.userIsAdmin = true
+      }
+
+
     },
     logout() {
       localStorage.removeItem('token');
@@ -57,6 +79,7 @@ export default {
   },
   mounted() {
     this.tokenInStorage();
+    this.getRole()
   }
 };
 </script>
