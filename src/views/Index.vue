@@ -4,7 +4,7 @@
       <div class="row">
         <ul class="list-unstyled d-flex flex-wrap justify-content-center">
           <li class="col-md-6 mb-4" v-for="sneaker in sneakers" :key="sneaker.id">
-            <div class="sneaker-block">
+            <div class="sneaker-block" @click="goToSneakerDetail(sneaker.id)">
               <img :src="sneaker.photoUrl" class="sneaker-img" :alt="sneaker.model">
               <div class="sneaker-info" @click="goToSneakerDetail(sneaker.id)">
                 <h1 class="card-title">{{sneaker.brand}}</h1>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Настраиваем базовый URL для всех запросов
-axios.defaults.baseURL = 'http://188.68.223.224:8081'; // Установите базовый URL для API
+axios.defaults.baseURL = 'http://188.68.223.224:8081';  // Установите базовый URL для API
 
 // Добавляем интерсептор на запросы
 axios.interceptors.request.use(config => {
